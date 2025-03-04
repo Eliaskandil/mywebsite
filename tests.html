@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>icrenempations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #counter {
+            font-size: 2em;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        #cps{
+            display: none;
+        }
+        #eps{
+            width: 100%;
+            margin-bottom: 25px;
+        }
+        #epc{
+            margin-bottom: 25px;
+            margin-top: 10px;
+        }
+        #bouten{
+            margin-top: 10px;
+        }
+        .alink{
+            display: inline-block; 
+            color: black; 
+            background-color: #efefef; 
+            outline:auto; 
+            outline-color: black; 
+            margin: 10px 10px; 
+            padding: 10px 20px; 
+            font-size: 1.2em; 
+            position: absolute;
+            top: 600px;
+            right: 400px;
+        }
+        #whenyoueatthecount{
+            position: absolute;
+            top:600px;
+            right:910px;
+            display: none;
+            color: white;
+        }
+        #bonus{
+            display: none;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="counter">0</div> <div id="time"></div>
+    <button onclick="incrementCounter()" id="bouten">bouten v1</button>
+    <button onclick="toggleCPS()" id="cps">enable count per second</button>
+    <div id="epc"><button onclick="upgrade1()" id="doubleveh">double count per tap </button> <input id="doubleprice">price for increase</input></div>
+    <div id="eps"><button onclick="upgrade2()" id="doubleyeh">double count per second </button> <input id="doubleprise">price for increase</input></div>
+    <div id="spc"></div>
+    <img id= "nuuh" src="./3.png" width="600" height="600" onmouseenter="image()" onmouseleave="image2()" onmousedown="image3()" onmouseup="image()"><label id="whenyoueatthecount">hi</label></img>
+    <a href="./index.html" class="alink" >back to home</a>
+    <img id="bonus" onclick="bonus()" src="./1.png" width="100" height="100"></img>
+
+    <script>
+        let count = 0   
+        let toggle = 0
+        const timern = Date.now()
+        let seconds = 0
+        let oldsce = 0
+        let upgrade1s = 1
+        let upgrade2s = 1
+        let cpc = 1
+        let epc = 0
+        let eps = 0
+        const ugrades = {
+        2: 20,
+        3: 50,
+        4: 150,
+        5: 500,
+        6: 1000,
+        7: 2500,
+        8: 5000,
+        9: 10000,
+        10: 10000,
+        11: 25000,
+        12: 40000,
+        13: 75000,
+        14: 100000,
+        15: 225000,
+        16: 500000,
+        17: 500000,
+        18: 500000,
+        19: 500000,
+        20: 500000,
+        }
+        const versions={
+            1:1,
+            2:2,
+            3:3,
+            4:4,
+            5:5,
+            6:6,
+            7:7,
+            8:8,
+            9:8.5,
+            10:9,
+            11:10,
+            12:11,
+            13:12,
+            14:13,
+            15:14,
+            16:14.2,
+            17:14.4,
+            18:14.6,
+            19:14.8,
+            20:15
+        }
+        requestAnimationFrame(loop)
+
+        function incrementCounter() {
+            add = cpc + epc
+            count += add;
+            if (count>49){
+                document.getElementById('cps').style.display = 'inline-block'
+            }
+        }
+        function toggleCPS() {
+            if (toggle==1) {
+                toggle = 0
+                document.getElementById('cps').innerText = "enable count per second"
+            }else{
+                toggle = 1
+                document.getElementById('cps').innerText = "disable count per second"
+            }
+        }
+        function loop() {
+            {
+                seconds = Math.floor((Date.now() - timern) / 1000)
+                document.getElementById('time').innerText = "youve been playing for " + seconds + " seconds"
+                if (seconds != oldsce & toggle == 1) {
+                  count += eps + 1
+                }
+                
+                oldsce = seconds
+                requestAnimationFrame(loop)
+            }
+            {
+                if (ugrades[cpc + 1] <= count) {
+                    cpc++
+                }
+
+            }
+            {
+                document.getElementById('counter').innerText = Math.floor(count);
+                document.getElementById('spc').innerText = cpc + " per click   +   " + epc + " extra     & " + (eps+1) + " per second (need button v3)";
+                document.getElementById('doubleveh').innerText = (document.getElementById('doubleprice').value/((upgrade1s*10)**2)) + " addition to epc"
+                document.getElementById('doubleyeh').innerText = (document.getElementById('doubleprise').value/(upgrade2s*9)**2) + " addition to eps"
+                document.getElementById('bouten').innerText = "button v" + versions[cpc]
+            }
+            {
+                if (Math.random() > 0.99999 & document.getElementById("bonus").style.display != 'inline-block'){
+                    h = (Math.random())*window.innerWidth
+                    r = (Math.random())*window.innerHeight
+                    document.getElementById("bonus").style.right = h + "px"
+                    document.getElementById("bonus").style.bottom = r + "px"
+                    document.getElementById("bonus").style.display = 'inline-block'
+                }
+            }
+        }
+        function upgrade1() {
+            if (isFinite(document.getElementById('doubleprice').value)&(count-document.getElementById('doubleprice').value >= 0)) {
+                increase = (document.getElementById('doubleprice').value/((upgrade1s*10)**2))
+                count -= document.getElementById('doubleprice').value
+                upgrade1s++
+                epc += increase
+            }
+        }
+        function upgrade2() {
+            if (isFinite(document.getElementById('doubleprise').value)&(count-document.getElementById('doubleprise').value >= 0)) {
+                increase = (document.getElementById('doubleprise').value/(upgrade2s*9)**2)
+                count -= document.getElementById('doubleprise').value
+                upgrade2s++
+                eps += increase
+            }
+        }
+        function image(){
+            document.getElementById("nuuh").src = "./4.png"
+            document.getElementById("whenyoueatthecount").style.display = 'none'
+        }
+        function image2(){
+            document.getElementById("nuuh").src = "./3.png"
+            document.getElementById("whenyoueatthecount").style.display = 'none'
+        }
+        function image3(){
+            document.getElementById("nuuh").src = "./2.png"
+            count += (count/(cpc*10))/(2**cpc)
+            document.getElementById("whenyoueatthecount").innerText = "+" + Math.round((count/(cpc*10))/(2**cpc)) + " count"
+            document.getElementById("whenyoueatthecount").style.display = 'inline-block'
+        }
+        function bonus(){
+            document.getElementById("bonus").style.display = 'none'
+            which = Math.ceil(Math.random()*10)
+            if (which < 3){
+                count += (epc+cpc)*20
+            }else if (which < 6){
+                count += (eps+1)*60
+            }else if(which < 8){
+                if (ugrades[cpc+1]){
+                    count += ugrades[cpc+1]/10
+                }else{
+                    count += ugrades[cpc]/10
+                }
+            }else if (which < 10){
+                count++
+                bonus()
+            }else{
+                epc++
+                eps++
+                if (ugrades[cpc+1]){
+                    cpc++
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
