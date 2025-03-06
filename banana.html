@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>banana</title>
+    </head>
+    <body>
+        <img src="./banana.png" onclick="bana()" id="bnd" width="600px" height="600px"></img>
+        <audio src="./banana.mp3" id="band"></audio>
+        <script>
+            onFrame()
+            function onFrame(){
+                document.getElementById("bnd").style.marginLeft = (window.innerWidth/80) + "%"
+                requestAnimationFrame(onFrame)
+            }
+            function bana(){
+                document.getElementById("band").play()
+            }
+        </script>
+    </body>
+</html>
