@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>numbers!!!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        .alink{
+            display: inline-block; 
+            color: black; 
+            background-color: #efefef; 
+            outline:auto; 
+            outline-color: black; 
+            margin: 10px 10px; 
+            padding: 10px 20px; 
+            font-size: 1.2em; 
+            position: absolute;
+            top: 600px;
+        }
+        .input{
+            font-size: 500%;
+            width: 25%;
+            height: 25%;
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="spc" style="font-size: 300%;">NUMBER SUBMISSIONS ARE OPEN!!!</div>
+    <input id="input" maxlength="8"></input></div><input id="input2" maxlength="8"></input><input id="input3" maxlength="8"></input></div>
+    <div id="spc" style="font-size: 300%;">WRITE YOUR SUBMISSIONS ABOVE TO HAVE A CHANCE OF JOINING THE GAME!!!</div>
+    <button style="font-size: 200%; background-color: green;color: #efefef;" onmousedown="submit1()" onmouseup="submit2()" onmouseenter="enterm()" onmouseleave="leavem()" id="submition1">SUBMIT!!!</button>
+    <script>
+        let potato = 0
+        requestAnimationFrame(loop)
+        function loop() {
+            {
+                requestAnimationFrame(loop)
+                document.getElementById("input").style.fontSize = window.innerWidth/Math.PI + "%"
+                document.getElementById("input2").style.fontSize = window.innerWidth/Math.PI + "%"
+                document.getElementById("input3").style.fontSize = window.innerWidth/Math.PI + "%"
+                document.getElementById("input").style.width = "25%"
+                document.getElementById("input2").style.width = "25%"
+                document.getElementById("input3").style.width = "25%"
+                if (potato == 1){
+                    document.getElementById("submition1").style.backgroundColor = "green"
+                    document.getElementById("submition1").style.fontSize = String(Number(document.getElementById("submition1").style.fontSize.substr(0,3)) + (185-Number(document.getElementById("submition1").style.fontSize.substr(0,3)))/5) + "%"
+                }else if(potato == 0){
+                    document.getElementById("submition1").style.backgroundColor = "#33EE33"
+                    document.getElementById("submition1").style.fontSize = String(Number(document.getElementById("submition1").style.fontSize.substr(0,3)) + (200-Number(document.getElementById("submition1").style.fontSize.substr(0,3)))/5) + "%"
+                }else{
+                    document.getElementById("submition1").style.fontSize = String(Number(document.getElementById("submition1").style.fontSize.substr(0,3)) + (160-Number(document.getElementById("submition1").style.fontSize.substr(0,3)))/5) + "%"
+                }
+            }
+        }
+        function submit1(){
+            potato = 2
+        }
+        function submit2(){
+            potato = 1
+            let mation = confirm("You sure these submissions are worthy enough of being voted?")
+            if(mation){
+                let text1 = Number(document.getElementById("input").value)
+                let text2 = Number(document.getElementById("input2").value)
+                let text3 = Number(document.getElementById("input3").value)
+                if((text1)&&(text2)&&(text3)){
+                    alert("GGs, your submissions are now being considered")
+                }else{
+                    let nice = []
+                    if(!text1){nice.push("1st")}
+                    if(!text2){nice.push("2nd")}
+                    if(!text3){nice.push("3rd")}
+                    if (nice.length==1){
+                        alert(`you cheeky boi, the ` + nice[0] + ` submission isn't a number!`)
+                    }else{
+                        let str = ""
+                        for(let i=0;i<nice.length;i++){
+                            if((i+1)==nice.length){str += "and " + nice[i]}else{str += nice[i] +", "}   
+                        }
+                        alert(`you cheeky boi, the ` + str + ` submissions aren't numbers!`)
+                    }
+                }
+            }
+        }
+        function enterm(){
+            potato = 1
+        }
+        function leavem(){
+            potato = 0
+        }
+    </script>
+
+</body>
+</html>
