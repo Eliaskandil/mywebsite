@@ -36,22 +36,23 @@
     </style>
 </head>
 <body>
-    <div id="spc" style="font-size: 300%;">NUMBER SUBMISSIONS ARE OPEN!!!</div>
+    <div id="spc" style="font-size: 300%;" class="tesxt">NUMBER SUBMISSIONS ARE OPEN!!!</div>
     <input id="input" maxlength="8"></input></div><input id="input2" maxlength="8"></input><input id="input3" maxlength="8"></input></div>
-    <div id="spc" style="font-size: 300%;">WRITE YOUR SUBMISSIONS ABOVE TO HAVE A CHANCE OF JOINING THE GAME!!!</div>
+    <div id="spc" style="font-size: 300%;" class="tesxt">WRITE YOUR SUBMISSIONS ABOVE TO HAVE A CHANCE OF JOINING THE GAME!!!</div>
     <button style="font-size: 200%; background-color: green;color: #efefef;" onmousedown="submit1()" onmouseup="submit2()" onmouseenter="enterm()" onmouseleave="leavem()" id="submition1">SUBMIT!!!</button>
     <script>
         let potato = 0
         requestAnimationFrame(loop)
+        document.getElementById("input").className = "input"
+        document.getElementById("input2").className = "input"
+        document.getElementById("input3").className = "input"
         function loop() {
             {
                 requestAnimationFrame(loop)
-                document.getElementById("input").style.fontSize = window.innerWidth/Math.PI + "%"
-                document.getElementById("input2").style.fontSize = window.innerWidth/Math.PI + "%"
-                document.getElementById("input3").style.fontSize = window.innerWidth/Math.PI + "%"
-                document.getElementById("input").style.width = "25%"
-                document.getElementById("input2").style.width = "25%"
-                document.getElementById("input3").style.width = "25%"
+                for(let i=0;i<document.getElementsByClassName("input").length;i++){
+                    document.getElementsByClassName("input")[i].style.fontSize = window.innerWidth/Math.PI + "%"
+                    document.getElementsByClassName("input")[i].style.width = "25%"
+                }
                 if (potato == 1){
                     document.getElementById("submition1").style.backgroundColor = "green"
                     document.getElementById("submition1").style.fontSize = String(Number(document.getElementById("submition1").style.fontSize.substr(0,3)) + (185-Number(document.getElementById("submition1").style.fontSize.substr(0,3)))/5) + "%"
@@ -60,6 +61,30 @@
                     document.getElementById("submition1").style.fontSize = String(Number(document.getElementById("submition1").style.fontSize.substr(0,3)) + (200-Number(document.getElementById("submition1").style.fontSize.substr(0,3)))/5) + "%"
                 }else{
                     document.getElementById("submition1").style.fontSize = String(Number(document.getElementById("submition1").style.fontSize.substr(0,3)) + (160-Number(document.getElementById("submition1").style.fontSize.substr(0,3)))/5) + "%"
+                }
+            }
+            {
+                let theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+                if(theme){
+                    document.body.style.backgroundColor = "black"
+                    for(let i=0;i<document.getElementsByClassName("input").length;i++){
+                        document.getElementsByClassName("input")[i].style.backgroundColor = "black"
+                        document.getElementsByClassName("input")[i].style.borderColor = "white"
+                        document.getElementsByClassName("input")[i].style.color = "white"
+                    }
+                    for(let i=0;i<document.getElementsByClassName("tesxt").length;i++){
+                        document.getElementsByClassName("tesxt")[i].style.color = "white"
+                    }
+                }else{
+                    document.body.style.backgroundColor = "white"
+                    for(let i=0;i<document.getElementsByClassName("input").length;i++){
+                        document.getElementsByClassName("input")[i].style.backgroundColor = "white"
+                        document.getElementsByClassName("input")[i].style.borderColor = "black"
+                        document.getElementsByClassName("input")[i].style.color = "black"
+                    }
+                    for(let i=0;i<document.getElementsByClassName("tesxt").length;i++){
+                        document.getElementsByClassName("tesxt")[i].style.color = "black"
+                    }
                 }
             }
         }
