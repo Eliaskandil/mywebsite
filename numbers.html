@@ -39,9 +39,11 @@
     <div id="spc" style="font-size: 300%;" class="tesxt">NUMBER SUBMISSIONS ARE OPEN!!!</div>
     <input id="input" maxlength="8"></input></div><input id="input2" maxlength="8"></input><input id="input3" maxlength="8"></input></div>
     <div id="spc" style="font-size: 300%;" class="tesxt">WRITE YOUR SUBMISSIONS ABOVE TO HAVE A CHANCE OF JOINING THE GAME!!!</div>
-    <button style="font-size: 200%; background-color: green;color: #efefef;" onmousedown="submit1()" onmouseup="submit2()" onmouseenter="enterm()" onmouseleave="leavem()" id="submition1">SUBMIT!!!</button>
+    <button style="font-size: 200%; background-color: green;color: #efefef;" onmousedown="submit1()" onmouseenter="enterm()" onmouseleave="leavem()" id="submition1">SUBMIT!!!</button>
+   <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.4/dist/pocketbase.umd.js"></script>
     <script>
         let potato = 0
+        
         requestAnimationFrame(loop)
         document.getElementById("input").className = "input"
         document.getElementById("input2").className = "input"
@@ -89,17 +91,44 @@
             }
         }
         function submit1(){
+            
             potato = 2
         }
-        function submit2(){
+        async function submit2(){
+            
             potato = 1
+            
             let mation = confirm("You sure these submissions are worthy enough of being voted?")
             if(mation){
                 let text1 = Number(document.getElementById("input").value)
                 let text2 = Number(document.getElementById("input2").value)
                 let text3 = Number(document.getElementById("input3").value)
                 if((text1)&&(text2)&&(text3)){
-                    alert("GGs, your submissions are now being considered")
+                    let pop13 = 0
+                    let usre = 0
+                    const pb = new PocketBase('http://privx.duckdns.org:12520');
+                    try{usre = await pb.collection('users').authWithOAuth2({ provider: 'discord' })}catch(error){alert("YOU GOTTA LOG IN, BUCKALUP"); alert("but seriously scripting this is hard work"); alert("i'll add more login methods later ;_;"); pop13 = 1}
+                    if(pb.authStore.isValid&&!pop13){
+                        const numcol = pb.collection("numbers")
+                        let emiail = usre.meta.email
+                        let rec = 0
+                        try{rec = await numcol.getFirstListItem('email=' + '"' + emiail + '"')}catch(error){rec = 0}
+                        if(rec){
+                            alert("HEYY YOU'VE ALREADY SUBMITTED NUMBERS >:(")
+                        }else{
+                            const recrod = await numcol.create({
+                                number1: text1,
+                                number2: text2,
+                                number3: text3,
+                                email: emiail
+                            })
+                            alert("GGs, your submissions shall now be considered!")
+                            alert("there will be a pool of 49 numbers with a bonus of grassy since everyone loves him")
+                        }
+                    }else if(!pop13){
+                        alert("how did you manage to login with a nonfunctioning account??? (atleast link it to your email?)")
+                    }
+                    
                 }else{
                     let nice = []
                     if(!text1){nice.push("1st")}
@@ -123,6 +152,7 @@
         function leavem(){
             potato = 0
         }
+        document.getElementById("submition1").addEventListener('click',submit2)
     </script>
 
 </body>
