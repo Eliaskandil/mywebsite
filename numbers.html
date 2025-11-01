@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>numbers!!!</title>
+    <title>Numbers!</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,19 +31,41 @@
             font-size: 500%;
             width: 25%;
             height: 25%;
-            
         }
     </style>
 </head>
 <body>
-    <div id="spc" style="font-size: 300%;" class="tesxt">NUMBER SUBMISSIONS ARE OPEN!!!</div>
+    <div id="spc" style="font-size: 300%;" class="tesxt">NUMBER SUBMISSIONS ARE OPEN!</div>
     <input id="input" maxlength="8"></input></div><input id="input2" maxlength="8"></input><input id="input3" maxlength="8"></input></div>
-    <div id="spc" style="font-size: 300%;" class="tesxt">WRITE YOUR SUBMISSIONS ABOVE TO HAVE A CHANCE OF JOINING THE GAME!!!</div>
+    <div id="spc" style="font-size: 200%;" class="tesxt">Write your submissions above for a chance of them to join the game!</div>
+    <div><button style="background-color: #0022FF; color: #FFFFFF;" id="discrodB">Login using Discord</button><button style="background-color: #FFFFFF;" id="emialB">Login using email</button></div>
     <button style="font-size: 200%; background-color: green;color: #efefef;" onmousedown="submit1()" onmouseenter="enterm()" onmouseleave="leavem()" id="submition1">SUBMIT!!!</button>
-   <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.4/dist/pocketbase.umd.js"></script>
+    <div class="tesxt" ><h1>~~~Game Details~~~</h1>
+    <p>There will be a pool of 50 submitted numbers which will be up for voting, each round some numbers will be eliminated from the game until one number remains</p>
+    <p>The game will be split in two parts, submissions being the first part</p>
+    <p>-- First Part: Submit your own numbers to have a chance of them being voted in future rounds</p>
+    <p>-- Second Part: 50 chosen numbers will be up for voting, you get to vote the three numbers you like the most</p>
+    <p>When each round ends, the numbers with the least votes get eliminated</p>
+    <p style="bottom: 0%; padding: 0px;">The game ends when only one number is left, giving it an eternally nice reputation and crowning it the winner of the game!</p>
+    <div style="font-size: 10%; margin-top: 0px; top: 0px; border-top: 0px; padding-top: 0px;">maybe next time you can submit any strings to be voted</div>
+    </div>
+    <div id="LoginUsingEmail" style="width: 50%; height: 50%; top:20%; left: 25%; background-color: #777777; position: absolute; border-color: #FFFFFF; border-radius: 20px; border-width: 2px; border-style: solid; display: none; opacity: 0;"><h1 id="logintext">Please enter your email:</h1> <input id="emailinp" style="font-size: x-large; height: 46px;"><button style="font-size: x-large;" id="loginB1">Login</button></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.3/dist/pocketbase.umd.js"></script>
     <script>
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        const pb = new PocketBase('http://privx.duckdns.org:12520');
         let potato = 0
-        
+        let usre = 0
+        const dcb = document.getElementById("discrodB")
+        const emb = document.getElementById("emialB")
+        const lgt = document.getElementById("logintext")
+        const emp = document.getElementById("emailinp")
+        const emaildial = document.getElementById("LoginUsingEmail")
+        const loginB1 = document.getElementById("loginB1")
+        pb.authStore.clear()
         requestAnimationFrame(loop)
         document.getElementById("input").className = "input"
         document.getElementById("input2").className = "input"
@@ -52,8 +74,8 @@
             {
                 requestAnimationFrame(loop)
                 for(let i=0;i<document.getElementsByClassName("input").length;i++){
-                    document.getElementsByClassName("input")[i].style.fontSize = window.innerWidth/Math.PI + "%"
-                    document.getElementsByClassName("input")[i].style.width = "25%"
+                    document.getElementsByClassName("input")[i].style.fontSize = window.innerWidth/(Math.PI+0.5) + "%"
+                    document.getElementsByClassName("input")[i].style.width = "20%"
                 }
                 if (potato == 1){
                     document.getElementById("submition1").style.backgroundColor = "green"
@@ -77,6 +99,8 @@
                     for(let i=0;i<document.getElementsByClassName("tesxt").length;i++){
                         document.getElementsByClassName("tesxt")[i].style.color = "white"
                     }
+                    document.getElementById("emialB").style.backgroundColor = "white"
+                    document.getElementById("emialB").style.color = "black"
                 }else{
                     document.body.style.backgroundColor = "white"
                     for(let i=0;i<document.getElementsByClassName("input").length;i++){
@@ -87,6 +111,8 @@
                     for(let i=0;i<document.getElementsByClassName("tesxt").length;i++){
                         document.getElementsByClassName("tesxt")[i].style.color = "black"
                     }
+                    document.getElementById("emialB").style.backgroundColor = "black"
+                    document.getElementById("emialB").style.color = "white"
                 }
             }
         }
@@ -94,25 +120,27 @@
             
             potato = 2
         }
+        
         async function submit2(){
-            
             potato = 1
-            
             let mation = confirm("You sure these submissions are worthy enough of being voted?")
             if(mation){
                 let text1 = Number(document.getElementById("input").value)
                 let text2 = Number(document.getElementById("input2").value)
                 let text3 = Number(document.getElementById("input3").value)
                 if((text1)&&(text2)&&(text3)){
-                    let pop13 = 0
-                    let usre = 0
-                    const pb = new PocketBase('http://privx.duckdns.org:12520');
-                    try{usre = await pb.collection('users').authWithOAuth2({ provider: 'discord' })}catch(error){alert("YOU GOTTA LOG IN, BUCKALUP"); alert("but seriously scripting this is hard work"); alert("i'll add more login methods later ;_;"); pop13 = 1}
-                    if(pb.authStore.isValid&&!pop13){
+                    if(pb.authStore.isValid){
                         const numcol = pb.collection("numbers")
-                        let emiail = usre.meta.email
+                        console.log(usre)
+                        let emiail = usre.record.email
                         let rec = 0
-                        try{rec = await numcol.getFirstListItem('email=' + '"' + emiail + '"')}catch(error){rec = 0}
+                        let real = (emiail.trim()).split(".")
+                        let real2 = ""
+                        for(i=0;i<real.length;i++){
+                            real2 += real[i]
+                        }
+                        console.log(real2)
+                        try{rec = await numcol.getFirstListItem('email=' + '"' + real2 + '"')}catch(error){}
                         if(rec){
                             alert("HEYY YOU'VE ALREADY SUBMITTED NUMBERS >:(")
                         }else{
@@ -120,13 +148,12 @@
                                 number1: text1,
                                 number2: text2,
                                 number3: text3,
-                                email: emiail
+                                email: real2
                             })
                             alert("GGs, your submissions shall now be considered!")
-                            alert("there will be a pool of 49 numbers with a bonus of grassy since everyone loves him")
                         }
-                    }else if(!pop13){
-                        alert("how did you manage to login with a nonfunctioning account??? (atleast link it to your email?)")
+                    }else{
+                        alert("do you not see the login buttons?")
                     }
                     
                 }else{
@@ -152,7 +179,57 @@
         function leavem(){
             potato = 0
         }
+        function login(){
+            dcb.style.display = 'none'
+            emb.style.display = 'none'
+        }
+        async function dislin() {
+            try{usre = await pb.collection('users').authWithOAuth2({ provider: 'discord' })}catch(error){}
+            if(usre){
+                login()
+            }
+        }
+        async function mailin() {
+            emaildial.style.display = "inline-block"
+            for(let op=1;op<=25;op++){
+                emaildial.style.opacity = op/25
+                emaildial.style.top = (19 + (op/24)) + "%"
+                await delay(1)
+            }
+        }
+        let stage = true
+        let result = 0
+        async function email1(){
+            const usress = pb.collection("users")
+            if(stage){
+                let ishelog = 0
+                lgt.innerText = "..."
+                emp.style.display = 'none'
+                loginB1.style.display = 'none'
+                try{await usress.getFirstListItem('email=' + '"' + emp.value + '"'); ishelog = 1}catch{}
+                let pas2s = Math.random().toString(36).substring(2,12)
+                try{const recuser = await usress.create({
+                    'email': emp.value,
+                    'password': pas2s,
+                    'passwordConfirm': pas2s
+                })}catch{}
+                result = await usress.requestOTP(emp.value);
+                emp.style.display = 'inline-block'
+                loginB1.style.display = 'inline-block'
+                lgt.innerText = "Please enter the OTP we sent to your email"
+                stage=false
+            }else{
+                try{usre = await usress.authWithOTP(result.otpId, emp.value)}catch{alert("Something wrong went on (maybe you wrote the OTP wrong?)")}
+                if(usre&&pb.authStore.isValid){
+                    login()
+                    emaildial.style.display = "none"
+                }
+            }
+        }
         document.getElementById("submition1").addEventListener('click',submit2)
+        dcb.addEventListener('click', dislin)
+        emb.addEventListener('click',mailin)
+        loginB1.addEventListener('click',email1)
     </script>
 
 </body>
