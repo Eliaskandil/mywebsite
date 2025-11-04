@@ -49,7 +49,7 @@
     <p style="bottom: 0%; padding: 0px;">The game ends when only one number is left, giving it an eternally nice reputation and crowning it the winner of the game!</p>
     <div style="font-size: 10%; margin-top: 0px; top: 0px; border-top: 0px; padding-top: 0px;">maybe next time you can submit any strings to be voted</div>
     </div>
-    <div id="LoginUsingEmail" style="width: 50%; height: 50%; top:20%; left: 25%; background-color: #777777; position: absolute; border-color: #FFFFFF; border-radius: 20px; border-width: 2px; border-style: solid; display: none; opacity: 0;"><h1 id="logintext">Please enter your email:</h1> <input id="emailinp" style="font-size: x-large; height: 46px;"><button style="font-size: x-large;" id="loginB1">Login</button></div>
+    <div id="LoginUsingEmail" style="width: 50%; height: 50%; top:20%; left: 25%; background-color: #777777; position: absolute; border-color: #FFFFFF; border-radius: 20px; border-width: 2px; border-style: solid; display: none; opacity: 0;"><h1 id="logintext">Please enter your email:</h1> <input id="emailinp" style="font-size: x-large; height: 46px;" placeholder="Email here"><button style="font-size: x-large;" id="loginB1">Login</button></div>
 
     <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.3/dist/pocketbase.umd.js"></script>
     <script>
@@ -202,21 +202,28 @@
         async function email1(){
             const usress = pb.collection("users")
             if(stage){
-                let ishelog = 0
+                console.log("lol")
                 lgt.innerText = "..."
                 emp.style.display = 'none'
                 loginB1.style.display = 'none'
-                try{await usress.getFirstListItem('email=' + '"' + emp.value + '"'); ishelog = 1}catch{}
+                console.log("hidden")
                 let pas2s = Math.random().toString(36).substring(2,12)
+                console.log("password made")
                 try{const recuser = await usress.create({
                     'email': emp.value,
                     'password': pas2s,
                     'passwordConfirm': pas2s
-                })}catch{}
+                })
+            consle.log("created")}catch{console.log("awh it errorred!!")}
+                console.log("yay")
+                await delay(1000)
                 result = await usress.requestOTP(emp.value);
+                console.log('did it!')
                 emp.style.display = 'inline-block'
                 loginB1.style.display = 'inline-block'
                 lgt.innerText = "Please enter the OTP we sent to your email"
+                emp.value = ""
+                emp.placeholder = "Enter OTP"
                 stage=false
             }else{
                 try{usre = await usress.authWithOTP(result.otpId, emp.value)}catch{alert("Something wrong went on (maybe you wrote the OTP wrong?)")}
