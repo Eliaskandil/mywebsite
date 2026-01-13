@@ -76,7 +76,6 @@
                 if((text1)&&(text2)&&(text3)){
                     if(pb.authStore.isValid){
                         const numcol = pb.collection("numbers")
-                        console.log(usre)
                         let emiail = usre.record.email
                         let rec = 0
                         let real = (emiail.trim()).split(".")
@@ -84,8 +83,7 @@
                         for(i=0;i<real.length;i++){
                             real2 += real[i]
                         }
-                        console.log(real2)
-                        try{rec = await numcol.getFirstListItem('email=' + '"' + real2 + '"')}catch(error){}
+                        try{rec = await numcol.getFirstListItem(`email="${real2}"`)}catch(error){}
                         if(rec){
                             alert("HEYY YOU'VE ALREADY SUBMITTED NUMBERS >:(")
                         }else{
@@ -144,35 +142,24 @@
                 await delay(1)
             }
         }
-        let stage = true
         let result = 0
         async function email1(){
             const usress = pb.collection("users")
-            if(stage){
-                console.log("lol")
-                lgt.innerText = "..."
-                emp.style.display = 'none'
-                loginB1.style.display = 'none'
-                console.log("hidden")
-                let pas2s = Math.random().toString(36).substring(2,12)
-                console.log("password made")
-                try{const recuser = await usress.create({
-                    'email': emp.value,
-                    'password': pas2s,
-                    'passwordConfirm': pas2s
-                })
-            consle.log("created")}catch(e){console.log("awh it errorred!!");}
-                console.log("yay")
-                await delay(1000)
-                result = await usress.requestOTP(emp.value);
-                console.log('did it!')
-                emp.style.display = 'inline-block'
-                emp.contentEditable = false
-                loginB2.style.display = 'inline-block'
-                OTPINP.style.display = "inline-block"
-                lgt.innerText = "Please enter the OTP we sent to your email"
-                stage=false
-            }
+            lgt.innerText = "..."
+            emp.style.display = 'none'
+            loginB1.style.display = 'none'
+            let pas2s = Math.random().toString(36).substring(2,12)
+            let recuser;
+            try{
+                recuser = await usress.create({'email': emp.value,'password': pas2s,'passwordConfirm': pas2s})
+            }catch(e){console.log("exists")}
+            await delay(1000)
+            try{result = await usress.requestOTP(emp.value);}catch(E){}
+            emp.style.display = 'inline-block'
+            emp.contentEditable = false
+            loginB2.style.display = 'inline-block'
+            OTPINP.style.display = "inline-block"
+            lgt.innerText = "Please enter the OTP we sent to your email"
         }
         async function email2(){
             const usress = pb.collection("users")
