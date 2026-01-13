@@ -154,7 +154,7 @@
                 recuser = await usress.create({'email': emp.value,'password': pas2s,'passwordConfirm': pas2s})
             }catch(e){console.log("exists")}
             await delay(1000)
-            try{result = await usress.requestOTP(emp.value);}catch(E){}
+            try{result = await usress.requestOTP(emp.value);}catch(E){console.log(E)}
             emp.style.display = 'inline-block'
             emp.contentEditable = false
             loginB2.style.display = 'inline-block'
@@ -173,4 +173,5 @@
         dcb.addEventListener('click', dislin)
         emb.addEventListener('click',mailin)
         loginB1.addEventListener('click',email1)
+
         loginB2.addEventListener('click',email2)
