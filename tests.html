@@ -101,6 +101,7 @@
         18: 500000,
         19: 500000,
         20: 500000,
+        21: 1000000,
         }
         const versions={
             1:1,
@@ -148,6 +149,9 @@
                 document.getElementById('time').innerText = "youve been playing for " + seconds + " seconds"
                 if (seconds != oldsce & toggle == 1) {
                   count += eps + 1
+                }
+                if(seconds >=100000){
+                    document.getElementById('time').innerText = "take a break, dude!"
                 }
                 
                 oldsce = seconds
@@ -228,6 +232,9 @@
                 if (ugrades[cpc+1]){
                     cpc++
                 }
+            }
+            if (3.141<=which<=3.142){
+                count += 314159
             }
         }
     </script>
