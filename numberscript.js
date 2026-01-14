@@ -1,8 +1,7 @@
-        
         function delay(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
-        const pb = new PocketBase('http://privx.duckdns.org:12520');
+        const pb = new PocketBase('https://api.sanojo.com:12520');
         let potato = 0
         let usre = 0
         const dcb = document.getElementById("discrodB")
@@ -156,7 +155,7 @@
             await delay(1000)
             try{result = await usress.requestOTP(emp.value);}catch(E){console.log(E)}
             emp.style.display = 'inline-block'
-            emp.contentEditable = false
+            emp.disabled = true;
             loginB2.style.display = 'inline-block'
             OTPINP.style.display = "inline-block"
             lgt.innerText = "Please enter the OTP we sent to your email"

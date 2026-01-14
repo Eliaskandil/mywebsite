@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Latest Quote
+        </title>
+        <style>
+            div{
+                width: 99%;
+                text-align:center;
+                font-size: 50px;
+                font-weight: bolder;
+                font-family: system-ui;
+            }
+            input{
+                margin-left: 34%;
+                font-size:60px;
+                border-color: #00FF00;
+                border-style: dashed;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="dark">Keep your message up or die trying to read the others!</div>
+        <div class="dark"><br>Latest message:</div>
+        <div class="dark" id="message">INSERT MESSAGE HERE</div>
+        <input id="textinp"><button id="button" style="font-size: 330%;background-color: #777777;margin-top: 10%;">SUBMIT!</button>
+        <div id="rainbow">write something here as a cool message to send!</div>
+        <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.3/dist/pocketbase.umd.js"></script>
+        <script>
+            function delay(ms){
+                return new Promise(resolve =>setTimeout(resolve,ms))
+            }
+            async function fetchIP(){
+                return new Promise(resolve=>fetch('https://api.ipify.org?format=json').then(response => response.json()).then(data =>  { resolve(data.ip)}))
+            }
+            const pb = new PocketBase("https://api.sanojo.com:12520")
+            const raintext = document.getElementById("rainbow")
+            const texts = document.getElementsByClassName("dark")
+            const tinp = document.getElementById("textinp")
+            const btn = document.getElementById("button")
+            const msg = document.getElementById("message")
+            let color = 0
+            var mousover = 0
+            pb.collection('message').subscribe('*', function (e) {
+                if(e.action == "create")
+                msg.innerText=e.record.text
+            })
+            async function rainbow(){
+                raintext.style.color = `hsl(${color},100%,50%)`
+                color += 1
+                await delay(10)
+                requestAnimationFrame(rainbow)
+                tinp.style.height = `${window.innerWidth/20}px`
+                tinp.style.width = `${window.innerWidth/5}px`
+                tinp.style.fontSize = `${window.innerWidth/30}px`
+                btn.style.height = `${window.innerWidth/20}px`
+                btn.style.width = `${window.innerWidth/5}px`
+                btn.style.fontSize = `${window.innerWidth/30}px`
+                {
+                    let color = window.matchMedia("(prefers-color-scheme: dark)").matches
+                    if (color){
+                        document.body.style.backgroundColor = "#000000"
+                        for(let i=0;i<texts.length;i++){
+                            texts[i].style.color = "#FFFFFF"
+                        }
+                        tinp.style.backgroundColor = "#222222"
+                        tinp.style.color = "#FFFFFF"
+                        tinp.style.borderColor = "#FF00FF"
+                        btn.style.color = "#000000"
+                    }else{
+                        document.body.style.backgroundColor = "#FFFFFF"
+                        for(let i=0;i<texts.length;i++){
+                            texts[i].style.color = "#000000"
+                        }
+                        tinp.style.backgroundColor = "#BBBBBB"
+                        tinp.style.color = "#000000"
+                        btn.style.color = "#FFFFFF"
+                        tinp.style.borderColor = "#00FF00"
+                    }
+                }
+                {
+                    let color = window.matchMedia("(prefers-color-scheme: dark)").matches
+                    if(color){
+                        if(mousover==1){
+                            btn.style.backgroundColor = "#CCCCCC"
+                        }else if(mousover==2){
+                            btn.style.backgroundColor = "#999999"
+                        }else{
+                            btn.style.backgroundColor = "#FFFFFF"
+                        }
+                    }else{
+                        if(mousover==1){
+                            btn.style.backgroundColor = "#333333"
+                        }else if(mousover==2){
+                            btn.style.backgroundColor = "#666666"
+                        }else{
+                            btn.style.backgroundColor = "#000000"
+                        }
+                    }
+                }
+            }
+            rainbow()
+            async function btnactivate(){
+                if(2<=tinp.value.length&&tinp.value.length<=200){
+                    if(!btn.disabled)mousover = 0
+                    let ip = await fetchIP()
+                    const msgc = pb.collection("message")
+                    let printer = false
+                    try{
+                        const msgr = await msgc.getFirstListItem(`IP="${ip}"`)
+                    }catch(e){
+                        printer = true
+                    }
+                    if(printer){
+                        const msg = await msgc.create({"text": tinp.value, "IP":ip})
+                    }else{
+                        let resp = await msgc.getFirstListItem(`IP="${ip}"`)
+                        msgc.delete(resp.id)
+                        const msg = await msgc.create({"text": tinp.value, "IP":ip})
+                    }
+                    btn.disabled = true
+                    await delay(5000)
+                    btn.disabled = false
+                }else{
+                    alert("message is past bounds! (2-200 letters)")
+                    alert("i am NOT risking the life of my servers just for a 2763 digit approximation of PI, Okay?")
+                }
+            }
+            async function load(){
+                btn.disabled = true
+                let ror = await pb.collection("message").getFirstListItem('IP != "damborgor"')
+                msg.innerText = ror.text
+                await delay(5000)
+                btn.disabled = false
+            }
+            load()
+            btn.addEventListener('click',btnactivate)
+            btn.onmouseenter =function(){if(!btn.disabled)mousover = 1}
+            btn.onmousedown= function(){mousover = 2}
+            btn.onmouseleave= function(){if(!btn.disabled)mousover = 0}
+        </script>
+    </body>
