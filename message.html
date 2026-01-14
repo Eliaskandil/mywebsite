@@ -129,7 +129,7 @@
             }
             async function load(){
                 btn.disabled = true
-                let ror = await pb.collection("message").getFirstListItem('IP != "damborgor"')
+                let ror = await pb.collection("message").getFirstListItem('IP!="ilikemen"',{sort:'-created'})
                 msg.innerText = ror.text
                 await delay(5000)
                 btn.disabled = false
