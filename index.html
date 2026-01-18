@@ -1,55 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numbers!</title>
-    <style> 
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
+    <head>
+        <style>
+        .alink{
+            display: inline-block; 
+            color: black; 
+            background-color: #efefef; 
+            outline:auto; 
+            outline-color: black; 
+            margin: 10px 10px; 
+            padding: 10px 20px; 
+            font-size: 1.7em; 
+            font:menu;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-        .input{
-            font-size: 500%;
-            width: 25%;
-            height: 25%;
-        }
-
-    </style>
-</head>
-<body>
-    <div id="spc" style="font-size: 300%;" class="tesxt">NUMBER SUBMISSIONS ARE OPEN!</div>
-    <input class="input" id="input" maxlength="8"></input><input id="input2"class="input" maxlength="8"></input><input id="input3"class="input" maxlength="8"></input>
-    <div id="spc" style="font-size: 200%;" class="tesxt">Write your submissions above for a chance of them to join the game!</div>
-    <div><button style="background-color: #0022FF; color: #FFFFFF;" id="discrodB">Login using Discord</button><button style="background-color: #FFFFFF;" id="emialB">Login using email</button></div>
-    <button style="font-size: 200%; background-color: green;color: #efefef;" onmousedown="submit1()" onmouseenter="enterm()" onmouseleave="leavem()" id="submition1">SUBMIT!!!</button>
-    <div class="tesxt" ><h1>~~~Game Details~~~</h1>
-    <p>There will be a pool of 50 submitted numbers which will be up for voting, each round some numbers will be eliminated from the game until one number remains</p>
-    <p>The game will be split in two parts, submissions being the first part</p>
-    <p>-- First Part: Submit your own numbers to have a chance of them being voted in future rounds</p>
-    <p>-- Second Part: 50 chosen numbers will be up for voting, you get to vote the three numbers you like the most</p>
-    <p>When each round ends, the numbers with the least votes get eliminated</p>
-    <p style="bottom: 0%; padding: 0px;">The game ends when only one number is left, giving it an eternally nice reputation and crowning it the winner of the game!</p>
-    <div style="font-size: 10%; margin-top: 0px; top: 0px; border-top: 0px; padding-top: 0px; padding-bottom: 20px;">maybe next time you can submit any strings to be voted</div>
-    <a href="./extras" style="color: black;font-size: 20px;border: #000000;background-color: #55FF77; border-width: 2px;border-radius: 12px; border-style: solid; padding-top: 5px;padding-right: 5px;padding-left: 5px;padding-bottom: 5px;">see some other small stuff i made!</a>
-</div>
-    <div id="LoginUsingEmail" style="width: 50%; height: 50%; top:20%; left: 25%; background-color: #777777; position: absolute; border-color: #FFFFFF; border-radius: 20px; border-width: 2px; border-style: solid; display: none; opacity: 0;">
-        <h1 id="logintext">Please enter your email:</h1>
-        <input id="emailinp" style="font-size: x-large; height: 46px;" placeholder="Email here">
-        <button style="font-size: x-large;" id="loginB1">Login</button>
-        <input id="OTPinp" style="font-size: x-large; height: 46px;margin-top: 10px;" class="OTPIP" placeholder="Enter the OTP we sent you">
-        <button style="font-size: x-large;" id="loginB2" class="OTPIP">Login</button>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.3/dist/pocketbase.umd.js"></script>
-    
-    <script src="./numberscript.js"></script>
-
-</body>
-</html>
+        </style>
+        <title>kan's workshop</title>
+    </head>
+    <body>
+        projects:
+        <a href="./clicker" class="alink">clicker game</a>
+        <a href="./banana" class="alink">banana button</a>
+        <a href="./message" class="alink">latest quote!</a>
+        <a href="./numbers" class="alink">number game</a>
+        <div style="font-size: 40px;">i will start adding more things here soon!</div>
+    </body>

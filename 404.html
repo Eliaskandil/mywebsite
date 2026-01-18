@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>404</title>
+        <style>
+            .text{
+                font-family:sans-serif;
+                color: white;
+
+            }
+        </style>
+    </head>
+    <body style="background-color: black;">
+        <div class="text" id="main">You've just got 404'd!</div>
+        <div><a href="./" class="text" id="href">click here to go back to the main page</a></div>
+        <script>
+            function getbyid(string){
+                return document.getElementById(string)
+            }
+            let main = getbyid("main")
+            let href = getbyid("href")
+            function anim(){
+                main.style.fontSize = window.innerWidth/20 + "px"
+                href.style.fontSize = window.innerWidth/20 + "px"
+                requestAnimationFrame(anim)
+            }; anim()
+        </script>
+    </body>
+</html>

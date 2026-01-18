@@ -2,19 +2,68 @@
 <html lang="en">
     <head>
         <title>banana</title>
+        <style>
+            .alink{
+                color: black; 
+                background-color: #efefef; 
+                outline:auto; 
+                outline-color: black; 
+                margin: 10px 10px; 
+                padding: 10px 20px; 
+                font-size: 1.2em; 
+                top: 600px;
+            }
+            div{
+                width: 99%;text-align:center;
+            }
+        </style>
     </head>
     <body>
-        <img src="./banana.png" onclick="bana()" id="bnd" width="600px" height="600px"></img>
-        <audio src="./banana.mp3" id="band"></audio>
+        <div><img src="./assets/banana.png" onclick="bana()" id="bnd" width="600px" height="600px"></img></div>
+        <div style="height:40px; letter-spacing: 7px;" id="COUNT">THE BANANA COUNT: 1</div>
+        <div><a href="./" class="alink">back to home</a></div>
+        <audio src="./assets/banana.mp3" id="band"></audio>
+        <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.3/dist/pocketbase.umd.js"></script>
         <script>
+            const pb = new PocketBase("https://api.sanojo.com:12520")
+            function setTXT(num){
+                document.getElementById("COUNT").innerText = "THE BANANA COUNT: " + num
+            }
             onFrame()
+            
             function onFrame(){
-                document.getElementById("bnd").style.marginLeft = (window.innerWidth/80) + "%"
+                if(window.innerWidth<600){
+                    document.getElementById("bnd").width = window.innerWidth
+                    document.getElementById("bnd").height = window.innerWidth
+                }
                 requestAnimationFrame(onFrame)
             }
-            function bana(){
-                document.getElementById("band").play()
+            let debounce = false
+            async function bana(){
+                if(!debounce){
+                    if(document.timeline.currentTime<=5)return;
+                    document.getElementById("band").play()
+                    debounce = true
+                    const count = await pb.collection("counters").getFirstListItem('type="banana"')
+                    const result = await pb.collection("counters").update(count.id,{"num":(count.num+1)})
+                    document.getElementById("bnd").style.opacity = 0.5
+                    await new Promise(resolve=>setTimeout(resolve,3000))
+                    document.getElementById("bnd").style.opacity = 1
+                    debounce = false
+                }
             }
+            async function start(){
+                const count = await pb.collection("counters").getFirstListItem('type="banana"')
+                setTXT(count.num)
+            }
+            pb.collection("counters").subscribe('*', function(e){
+                if(e.action=="update"){
+                    if(e.record.type=="banana"){
+                        setTXT(e.record.num)
+                    }
+                }
+            })
+            start()
         </script>
     </body>
 </html>

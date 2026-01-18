@@ -18,6 +18,16 @@
                 border-color: #00FF00;
                 border-style: dashed;
             }
+            .alink{
+                color: black; 
+                background-color: #efefef; 
+                outline:auto; 
+                outline-color: black; 
+                margin: 10px 10px; 
+                padding: 10px 20px; 
+                font-size: 0.4em; 
+                top: 600px;
+            }
         </style>
     </head>
     <body>
@@ -26,6 +36,8 @@
         <div class="dark" id="message">INSERT MESSAGE HERE</div>
         <input id="textinp"><button id="button" style="font-size: 330%;background-color: #777777;margin-top: 10%;">SUBMIT!</button>
         <div id="rainbow">write something here as a cool message to send!</div>
+        <div style="align-content: center; margin-top: 10px;"><a href="./" class="alink">...or go back to home and check my other projects!</a></div>
+        
         <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.3/dist/pocketbase.umd.js"></script>
         <script>
             function delay(ms){
