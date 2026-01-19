@@ -116,6 +116,7 @@
             async function btnactivate(){
                 if(2<=tinp.value.length&&tinp.value.length<=200){
                     if(!btn.disabled)mousover = 0
+                    btn.disabled = true
                     let ip = await fetchIP()
                     const msgc = pb.collection("message")
                     let printer = false
@@ -131,7 +132,6 @@
                         msgc.delete(resp.id)
                         const msg = await msgc.create({"text": tinp.value, "IP":ip})
                     }
-                    btn.disabled = true
                     await delay(5000)
                     btn.disabled = false
                 }else{
@@ -152,4 +152,5 @@
             btn.onmousedown= function(){mousover = 2}
             btn.onmouseleave= function(){if(!btn.disabled)mousover = 0}
         </script>
+
     </body>
