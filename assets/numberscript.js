@@ -66,6 +66,7 @@
         }
         
         async function submit2(){
+            document.getElementById("submition1").disabled = true
             potato = 1
             let mation = confirm("You sure these submissions are worthy enough of being voted?")
             if(mation){
@@ -114,6 +115,7 @@
                     }
                 }
             }
+            document.getElementById("submition1").disabled = true
         }
         function enterm(){
             potato = 1
@@ -174,3 +176,4 @@
         loginB1.addEventListener('click',email1)
 
         loginB2.addEventListener('click',email2)
+
