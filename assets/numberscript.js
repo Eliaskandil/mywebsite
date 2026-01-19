@@ -115,7 +115,7 @@
                     }
                 }
             }
-            document.getElementById("submition1").disabled = true
+            document.getElementById("submition1").disabled = false
         }
         function enterm(){
             potato = 1
@@ -176,4 +176,5 @@
         loginB1.addEventListener('click',email1)
 
         loginB2.addEventListener('click',email2)
+
 
