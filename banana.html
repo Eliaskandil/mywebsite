@@ -25,7 +25,19 @@
         <audio src="./assets/banana.mp3" id="band"></audio>
         <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.3/dist/pocketbase.umd.js"></script>
         <script>
-            const pb = new PocketBase("https://api.sanojo.com:12520")
+            async function sammyreq(ENDPOINT) {
+                let path = "https://sanojo.com/";
+                const res = await fetch(path + ENDPOINT, {
+                    method: "POST",
+                    credentials: "include",
+                });
+                const json = await res.json();
+                return {
+                    res: res,
+                    json: json,
+                };
+            }
+            const wsok = new WebSocket("https://sanojo.com/realtime")
             function setTXT(num){
                 document.getElementById("COUNT").innerText = "THE BANANA COUNT: " + num
             }
@@ -44,26 +56,21 @@
                     if(document.timeline.currentTime<=5)return;
                     document.getElementById("band").play()
                     debounce = true
-                    const count = await pb.collection("counters").getFirstListItem('type="banana"')
-                    const result = await pb.collection("counters").update(count.id,{"num":(count.num+1)})
+                    const rets = await sammyreq("banana/inc")
+                    setTXT(rets.json.count)
                     document.getElementById("bnd").style.opacity = 0.5
                     await new Promise(resolve=>setTimeout(resolve,3000))
                     document.getElementById("bnd").style.opacity = 1
                     debounce = false
                 }
             }
-            async function start(){
-                const count = await pb.collection("counters").getFirstListItem('type="banana"')
-                setTXT(count.num)
-            }
-            pb.collection("counters").subscribe('*', function(e){
-                if(e.action=="update"){
-                    if(e.record.type=="banana"){
-                        setTXT(e.record.num)
-                    }
-                }
+            
+            setInterval(()=>{
+                wsok.send("COUNT")
+            },500)
+            wsok.addEventListener("message",(msg)=>{
+                setTXT(msg.data)
             })
-            start()
         </script>
     </body>
 </html>
