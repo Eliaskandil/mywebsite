@@ -1,14 +1,14 @@
 function delay(ms){
     return new Promise(resolve =>setTimeout(resolve,ms))
 }
-const wsok = new WebSocket("https://sanojo.com/realtime")
+const wsok = new WebSocket("https://api.sanojo.com:12520/realtime")
 const raintext = document.getElementById("rainbow")
 const texts = document.getElementsByClassName("dark")
 const tinp = document.getElementById("textinp")
 const btn = document.getElementById("button")
 const msg = document.getElementById("message")
 async function sammyreq(ENDPOINT, BODY) {
-    let path = "https://sanojo.com/";
+    let path = "https://api.sanojo.com:12520/";
     const res = await fetch(path + ENDPOINT, {
         body: JSON.stringify(BODY),
         method: "POST",

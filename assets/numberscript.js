@@ -2,7 +2,7 @@ function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 async function sammyreq(METHOD, ENDPOINT, BODY) {
-    let path = "https://sanojo.com/";
+    let path = "https://api.sanojo.com:12520/";
     if (METHOD == "POST") {
         const res = await fetch(path + ENDPOINT, {
             body: JSON.stringify(BODY),
