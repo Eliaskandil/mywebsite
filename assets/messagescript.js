@@ -82,7 +82,7 @@ async function btnactivate(){
     if(2<=tinp.value.length&&tinp.value.length<=200){
         if(!btn.disabled)mousover = 0
         btn.disabled = true
-        const result = await sammyreq("message/new",{message:tinp.value})
+        const result = await sammyreq("api/message/new",{message:tinp.value})
         await delay(5000)
         btn.disabled = false
     }else{

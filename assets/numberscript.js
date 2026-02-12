@@ -164,8 +164,8 @@ async function submit2() {
         let text2 = Number(document.getElementById("input2").value);
         let text3 = Number(document.getElementById("input3").value);
         if (text1 && text2 && text3) {
-            const result = await sammyreq("POST", "numbers/submit", {
-                auS: localStorage.getItem("pocketbase_auth").record,
+            const result = await sammyreq("POST", "api/numbers/submit", {
+                auS: pb.authStore.record,
                 number1: text1,
                 number2: text2,
                 number3: text3,
@@ -210,8 +210,8 @@ function login() {
     emb.style.display = "none";
 }
 async function dislin() {
-    let link = await sammyreq("GET", "auth/discord");
-    location.replace(link.json.link);
+    let link = await sammyreq("GET", "api/auth/discord");
+    location.href = link.json.link
 }
 async function mailin() {
     emaildial.style.display = "inline-block";
@@ -225,7 +225,7 @@ async function mailin() {
 }
 let result = 0;
 async function email1() {
-    const otpres1 = await sammyreq("POST", "auth/email/start", {
+    const otpres1 = await sammyreq("POST", "api/auth/email/start", {
         email: emp.value,
     });
     result = await otpres1.json.OTPID;
@@ -240,7 +240,7 @@ async function email1() {
     lgt.innerText = "Please enter the OTP we sent to your email";
 }
 async function email2() {
-    const resp = await sammyreq("POST", "auth/email/end", {
+    const resp = await sammyreq("POST", "api/auth/email/end", {
         ID: result,
         OTP: OTPINP.value,
     });
@@ -265,4 +265,3 @@ emb.addEventListener("click", mailin);
 loginB1.addEventListener("click", email1);
 
 loginB2.addEventListener("click", email2);
-
