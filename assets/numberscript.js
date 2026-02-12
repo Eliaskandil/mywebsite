@@ -25,7 +25,6 @@ async function sammyreq(METHOD, ENDPOINT, BODY) {
         };
     }
 }
-const pb = new PocketBase("https://api.sanojo.com:12520");
 let potato = 0;
 let usre = 0;
 const dcb = document.getElementById("discrodB");
@@ -99,7 +98,7 @@ function loop() {
         }
     }
     {
-        if (pb.authStore.isValid) {
+        if (localStorage.getItem("pocketbase_auth")) {
             login();
         }
     }
@@ -166,7 +165,7 @@ async function submit2() {
         let text3 = Number(document.getElementById("input3").value);
         if (text1 && text2 && text3) {
             const result = await sammyreq("POST", "numbers/submit", {
-                auS: pb.authStore.record,
+                auS: localStorage.getItem("pocketbase_auth").record,
                 number1: text1,
                 number2: text2,
                 number3: text3,
@@ -266,3 +265,4 @@ emb.addEventListener("click", mailin);
 loginB1.addEventListener("click", email1);
 
 loginB2.addEventListener("click", email2);
+
