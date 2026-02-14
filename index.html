@@ -3,24 +3,38 @@
     <head>
         <style>
         .alink{
-            display: inline-block; 
+            display:inline-block;
             color: black; 
             background-color: #efefef; 
             outline:auto; 
             outline-color: black; 
-            margin: 10px 10px; 
-            padding: 10px 20px; 
-            font-size: 1.7em; 
-            font:menu;
+            margin: 10px 0px; 
+            padding: 10px 0px; 
+            font-family: system-ui;
+        }
+        div{
+            text-align: center;
         }
         </style>
         <title>kan's workshop</title>
     </head>
     <body>
-        projects:
-        <a href="./clicker" class="alink">clicker game</a>
-        <a href="./banana" class="alink">banana button</a>
-        <a href="./message" class="alink">latest quote!</a>
-        <a href="./numbers" class="alink">number game</a>
-        <div style="font-size: 40px;">i will start adding more things here soon!</div>
+        <div id="difv">projects:</div>
+        <div><a href="./clicker" class="alink">clicker game</a></div>
+        <div><a href="./banana" class="alink">banana button</a></div>
+        <div><a href="./message" class="alink">latest quote!</a></div>
+        <div><a href="./numbers" class="alink">number game</a></div>
+        <div style="font-size: 40px;font-family: system-ui;">i will start adding more things here soon!</div>
+        <script>
+            const alink = document.getElementsByClassName("alink")
+            function loop(){
+                for(let i=0;i<alink.length;i++){
+                    const j = alink[i]
+                    j.style.fontSize = (1/window.innerWidth)*60000+"px"
+                    j.style.width = "100%"
+                }
+                requestAnimationFrame(loop)
+            }
+            loop()
+        </script>
     </body>
