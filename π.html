@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Count to π!</title>
+        <style>
+            div{
+                text-align: center;
+                font-size: 400%;
+                font-family: system-ui;
+            }
+            a{
+                color: black; 
+                background-color: #efefef; 
+                outline:auto; 
+                outline-color: black; 
+                padding: 5px 5px; 
+                font-size: 30px; 
+            }
+            button{
+                border: 3px;
+                border-style:solid;
+                text-align: center;
+            }
+            input{
+                border: 3px;
+                border-style:solid;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="size baw">"π" right now:</div>
+        <div id="π" class="baw">connecting...</div>
+        <div><input maxlength="1"class="size"id="iπput"><button class="size" id="seπd">submit a digit!</button></div>
+        <div style="margin-top: 50px;"><a href="./index.html" class="baw">back to home</a></div>
+        <script>
+            const webs = new WebSocket("https://api.sanojo.com:12520/api/realtime")
+            async function sammyreq(ENDPOINT, BODY) {
+                let path = "https://api.sanojo.com:12520/";
+                const res = await fetch(path + ENDPOINT, {
+                    body: JSON.stringify(BODY),
+                    method: "POST",
+                    credentials: "include",
+                    headers: { "Content-Type": "application/json" },
+                });
+                const json = await res.json();
+                return {
+                    res: res,
+                    json: json,
+                };
+            }
+            loop()
+            function loop(){
+                const size = document.getElementsByClassName("size")
+                for (const obj of size) {
+                    const ratio = window.innerHeight/window.innerWidth
+                    obj.style.fontSize = ratio*100-Math.min(window.innerWidth/10,ratio*40) + "px"
+                }
+                dark()
+                requestAnimationFrame(loop)
+            }
+            function dark(){
+                const color = window.matchMedia("(prefers-color-scheme: dark)").matches
+                const baw = document.getElementsByClassName("baw")
+                const form = [document.getElementById("iπput"),document.getElementById("seπd")]
+                if(color){
+                    for(const i of baw){
+                        if(i.href){
+                            i.style.backgroundColor = "#000000"
+                        }
+                        i.style.color = "#FFFFFF"
+                    }
+                    document.body.style.backgroundColor = "#000000"
+                    for(const inp of form){
+                        inp.style.backgroundColor = "#111111"
+                        inp.style.color = "#FFFFFF"
+                    }
+                }else{
+                    for(const i of baw){
+                        if(i.href){
+                            i.style.backgroundColor = "#FFFFFF"
+                        }
+                        i.style.color = "#000000"
+                    }
+                    document.body.style.backgroundColor = "#FFFFFF"
+                    for(const inp of form){
+                        inp.style.backgroundColor = "#EEEEEE"
+                        inp.style.color = "#000000"
+                    }
+                }
+            }
+            function wedbs(){
+                webs.send("PI")
+                webs.addEventListener("message",(message)=>{
+                    document.getElementById("π").innerText=message.data
+                })
+            }
+            async function submit(){
+                const val = document.getElementById("iπput").value
+                const response = await sammyreq("api/pi",{"pi":val,"pass":false})
+                const script = document.createElement("script")
+                script.id = "respoπse"
+                script.innerHTML=response.json.message + ` document.getElementById("respoπse").remove()`
+                document.body.append(script)
+            }
+            webs.addEventListener("open",wedbs)
+            document.getElementById("seπd").addEventListener("click",submit)
+        </script>
+    </body>
+</html>

@@ -23,7 +23,6 @@
         <div style="height:40px; letter-spacing: 7px;" id="COUNT">THE BANANA COUNT: 1</div>
         <div><a href="./" class="alink">back to home</a></div>
         <audio src="./assets/banana.mp3" id="band"></audio>
-        <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.3/dist/pocketbase.umd.js"></script>
         <script>
             async function sammyreq(ENDPOINT) {
                 let path = "https://api.sanojo.com:12520/";
@@ -37,17 +36,33 @@
                     json: json,
                 };
             }
-            const wsok = new WebSocket("https://api.sanojo.com:12520/realtime")
+            const wsok = new WebSocket("https://api.sanojo.com:12520/api/realtime")
             function setTXT(num){
                 document.getElementById("COUNT").innerText = "THE BANANA COUNT: " + num
             }
             onFrame()
-            
+            function dord(){
+                const color = window.matchMedia("(prefers-color-scheme: dark)").matches
+                const baw = document.getElementsByClassName("alink")[0]
+                const count = document.getElementById("COUNT")
+                if(color){
+                    document.body.style.backgroundColor="#000000"
+                    baw.style.backgroundColor = "#111111"
+                    baw.style.color = "#EEEEEE"
+                    count.style.color = "#FFFFFF"
+                }else{
+                    document.body.style.backgroundColor="#FFFFFF"
+                    baw.style.backgroundColor = "#EEEEEE"
+                    baw.style.color = "#111111"
+                    count.style.color = "#000000"
+                }
+            }
             function onFrame(){
                 if(window.innerWidth<600){
                     document.getElementById("bnd").width = window.innerWidth
                     document.getElementById("bnd").height = window.innerWidth
                 }
+                dord()
                 requestAnimationFrame(onFrame)
             }
             let debounce = false
@@ -56,7 +71,7 @@
                     if(document.timeline.currentTime<=5)return;
                     document.getElementById("band").play()
                     debounce = true
-                    const rets = await sammyreq("banana/inc")
+                    const rets = await sammyreq("api/banana/inc")
                     setTXT(rets.json.count)
                     document.getElementById("bnd").style.opacity = 0.5
                     await new Promise(resolve=>setTimeout(resolve,3000))
@@ -65,7 +80,7 @@
                 }
             }
             
-            setInterval(()=>{
+            setTimeout(()=>{
                 wsok.send("COUNT")
             },500)
             wsok.addEventListener("message",(msg)=>{

@@ -1,7 +1,7 @@
 function delay(ms){
     return new Promise(resolve =>setTimeout(resolve,ms))
 }
-const wsok = new WebSocket("https://api.sanojo.com:12520/realtime")
+const wsok = new WebSocket("https://api.sanojo.com:12520/api/realtime")
 const raintext = document.getElementById("rainbow")
 const texts = document.getElementsByClassName("dark")
 const tinp = document.getElementById("textinp")
@@ -95,9 +95,9 @@ async function load(){
     await delay(5000)
     btn.disabled = false
 }
-setInterval(()=>{
+setTimeout(()=>{
     wsok.send("MESSAGE")
-},1000)
+},500)
 wsok.addEventListener("message",(mesg)=>{
     msg.innerText = mesg.data
 })

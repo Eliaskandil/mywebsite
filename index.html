@@ -6,37 +6,56 @@
             display:inline-block;
             color: black; 
             background-color: #efefef; 
-            outline:auto; 
-            outline-color: black; 
-            margin: 10px 0px; 
+            border-style: solid;
+            margin: 4px 0px; 
             padding: 10px 0px; 
             font-family: system-ui;
         }
         div{
             text-align: center;
+            font-size: 30px;
+            font-family: sans-serif;
         }
         </style>
         <title>kan's workshop</title>
-        <meta name="description" content="a fun little website that i made">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta property="twitter:image" content="https://sanojo.com/assets/embedphoto.png">
     </head>
     <body>
-        <div id="difv">projects:</div>
+        <div class="text">projects:</div>
         <div><a href="./clicker" class="alink">clicker game</a></div>
-        <div><a class="alink" title="the API is down =(" disabled>banana button</a></div>
-        <div><a  class="alink" title="the API is down =(" disabled>latest quote!</a></div>
+        <div><a href="./banana" class="alink">banana button</a></div>
+        <div><a href="./message" class="alink">latest quote</a></div>
         <div><a href="./numbers" class="alink">number game</a></div>
-        <div style="font-size: 40px;font-family: system-ui;">i will start adding more things here soon!</div>
+        <div><a href="./π" class="alink">count to π</a></div>
+        <div style="font-size: 40px;font-family: system-ui;" class="text">i will start adding more things here soon!</div>
         <script>
             const alink = document.getElementsByClassName("alink")
             function loop(){
-                for(let i=0;i<alink.length;i++){
-                    const j = alink[i]
-                    j.style.fontSize = (1/window.innerWidth)*60000+"px"
-                    j.style.width = "100%"
+                for(const i of alink){
+                    i.style.fontSize = (1/window.innerWidth)*60000+"px"
+                    i.style.width = "100%"
                 }
+                bord()
                 requestAnimationFrame(loop)
+            }
+            function bord(){
+                const color = window.matchMedia("(prefers-color-scheme: dark)").matches
+                const alink = document.getElementsByClassName("alink")
+                const text = document.getElementsByClassName("text")
+                if(color){
+                    for(const i of text)i.style.color = "#FFFFFF"
+                    document.body.style.backgroundColor="#000000"
+                    for(const i of alink){
+                        i.style.color = "#FFFFFF"
+                        i.style.backgroundColor = "#000000"
+                    }
+                }else{
+                    for(const i of text)i.style.color = "#000000"
+                    document.body.style.backgroundColor="#FFFFFF"
+                    for(const i of alink){
+                        i.style.color = "#000000"
+                        i.style.backgroundColor = "#FFFFFF"
+                    }
+                }
             }
             loop()
         </script>

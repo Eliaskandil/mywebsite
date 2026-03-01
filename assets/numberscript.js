@@ -39,7 +39,7 @@ requestAnimationFrame(loop);
 let url = new URL(location.href)
 const paramfordc = url.searchParams.get("pbauth")
 if(paramfordc){
-    localStorage.setItem("pocketbase_auth",paramfordc)
+    localStorage.setItem("auth",paramfordc)
     url.searchParams.delete("pbauth")
     location.href = url
 }
@@ -98,7 +98,7 @@ function loop() {
         }
     }
     {
-        if (localStorage.getItem("pocketbase_auth")) {
+        if (localStorage.getItem("auth")) {
             login();
         }
     }
@@ -165,7 +165,7 @@ async function submit2() {
         let text3 = Number(document.getElementById("input3").value);
         if (text1 && text2 && text3) {
             const result = await sammyreq("POST", "api/numbers/submit", {
-                auS: pb.authStore.record,
+                auS: localStorage.getItem("auth"),
                 number1: text1,
                 number2: text2,
                 number3: text3,
@@ -247,7 +247,7 @@ async function email2() {
     if (resp.json.success) {
         emaildial.style.display = "none";
         localStorage.setItem(
-            "pocketbase_auth",
+            "auth",
             JSON.stringify({
                 record: resp.json.record,
                 token: resp.json.token,

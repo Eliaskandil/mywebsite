@@ -52,18 +52,29 @@
             display: none;
             position: absolute;
         }
+        .BGC{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <div id="counter">0</div> <div id="time"></div>
-    <button onclick="incrementCounter()" id="bouten">bouten v1</button><br>
-    <button onclick="toggleCPS()" id="cps">enable count per second</button>
-    <div id="epc"><button onclick="upgrade1()" id="doubleveh">double count per tap </button><br> <input id="doubleprice"><br>price for increase</div>
-    <div id="eps"><button onclick="upgrade2()" id="doubleyeh">double count per second </button><br> <input id="doubleprise"><br>price for increase</div><br>
-    <div id="spc"></div>
+    <div id="counter" class="CNC">0</div> <div id="time" class="CNC"></div>
+    <button onclick="incrementCounter()" id="bouten" class="BGC">bouten v1</button><br>
+    <button onclick="toggleCPS()" id="cps" class="BGC">enable count per second</button>
+    <div id="epc" class="CNC">
+        <button onclick="upgrade1()" id="doubleveh" class="BGC">double count per tap </button><br>
+        <input id="doubleprice" class="BGC"><br>
+        price for increase
+    </div>
+    <div id="eps" class="CNC">
+        <button onclick="upgrade2()" id="doubleyeh" class="BGC">double count per second </button><br>
+        <input id="doubleprise" class="BGC"><br>
+        price for increase
+    </div>
+    <div id="spc" class="CNC"></div>
     <div><img id= "nuuh" src="./assets/3.png" width="600" height="600" onmouseenter="image()" onmouseleave="image2()" onmousedown="image3()" onmouseup="image()"><label id="whenyoueatthecount">hi</label></div>
-    <a href="./" class="alink" >back to home</a>
+    <a href="./" class="alink BGC">back to home</a>
     <img id="bonus" onclick="bonus()" src="./assets/1.png" width="100" height="100"></img>
 
     <script>
@@ -144,17 +155,41 @@
                 document.getElementById('cps').innerText = "disable count per second"
             }
         }
+        function bord(){
+            const color = window.matchMedia("(prefers-color-scheme: dark)").matches
+            const baw = document.getElementsByClassName("BGC")
+            const otc = document.getElementsByClassName("CNC")
+            if(color){
+                for(const i of baw){
+                    i.style.backgroundColor = "#111111"
+                    i.style.color = "#EEEEEE"
+                }
+                for(const i of otc){
+                    i.style.color = "#FFFFFF"
+                }
+                document.body.style.backgroundColor = "#000000"
+            }else{
+                for(const i of baw){
+                    i.style.backgroundColor = "#EEEEEE"
+                    i.style.color = "#111111"
+                }
+                for(const i of otc){
+                    i.style.color = "#000000"
+                }
+                document.body.style.backgroundColor = "#FFFFFF"
+            }
+        }
         function loop() {
             {
                 if (cpc>=3){
                 document.getElementById('cps').style.display = 'inline-block'
                 }
-                localStorage.setItem("ID1",upgrade1s)//upgrade1s
-                localStorage.setItem("ID2",upgrade2s)//upgrade2s
-                localStorage.setItem("E1",eps)//eps
-                localStorage.setItem("E2",epc)//epc
-                localStorage.setItem("C",count)//count
-                localStorage.setItem("S",cpc)//count
+                localStorage.setItem("ID1",upgrade1s)
+                localStorage.setItem("ID2",upgrade2s)
+                localStorage.setItem("E1",eps)
+                localStorage.setItem("E2",epc)
+                localStorage.setItem("C",count)
+                localStorage.setItem("S",cpc)
             }
             {
                 seconds = Math.floor((Date.now() - timern) / 1000)
@@ -167,6 +202,7 @@
                 }
                 
                 oldsce = seconds
+                bord()
                 requestAnimationFrame(loop)
             }
             {
@@ -260,8 +296,6 @@
                 count += 31415926535
             }
         }
-        
-
     </script>
 
 </body>
