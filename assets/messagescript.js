@@ -12,7 +12,6 @@ async function sammyreq(ENDPOINT, BODY) {
     const res = await fetch(path + ENDPOINT, {
         body: JSON.stringify(BODY),
         method: "POST",
-        credentials: "include",
         headers: { "Content-Type": "application/json" },
     });
     const json = await res.json();

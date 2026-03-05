@@ -27,8 +27,7 @@
             async function sammyreq(ENDPOINT) {
                 let path = "https://api.sanojo.com:12520/";
                 const res = await fetch(path + ENDPOINT, {
-                    method: "POST",
-                    credentials: "include",
+                    method: "POST"
                 });
                 const json = await res.json();
                 return {
