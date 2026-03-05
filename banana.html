@@ -25,7 +25,7 @@
         <audio src="./assets/banana.mp3" id="band"></audio>
         <script>
             async function sammyreq(ENDPOINT) {
-                let path = "https://api.sanojo.com:12520/";
+                let path = "https://api.sanojo.com:18081/";
                 const res = await fetch(path + ENDPOINT, {
                     method: "POST"
                 });
@@ -35,7 +35,7 @@
                     json: json,
                 };
             }
-            const wsok = new WebSocket("https://api.sanojo.com:12520/api/realtime")
+            const wsok = new WebSocket("https://api.sanojo.com:18081/api/realtime")
             function setTXT(num){
                 document.getElementById("COUNT").innerText = "THE BANANA COUNT: " + num
             }

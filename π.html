@@ -32,11 +32,11 @@
         <div class="size baw">"π" right now:</div>
         <div id="π" class="baw">connecting...</div>
         <div><input maxlength="1"class="size"id="iπput"><button class="size" id="seπd">submit a digit!</button></div>
-        <div style="margin-top: 50px;"><a href="./index.html" class="baw">back to home</a></div>
+        <div style="margin-top: 50px;"><a href="./" class="baw">back to home</a></div>
         <script>
-            const webs = new WebSocket("https://api.sanojo.com:12520/api/realtime")
+            const webs = new WebSocket("https://api.sanojo.com:18081/api/realtime")
             async function sammyreq(ENDPOINT, BODY) {
-                let path = "https://api.sanojo.com:12520/";
+                let path = "https://api.sanojo.com:18081/";
                 const res = await fetch(path + ENDPOINT, {
                     body: JSON.stringify(BODY),
                     method: "POST",
